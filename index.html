@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPW - Creattion Project Web</title>
+    <!-- Tailwind CSS via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" onerror="console.error('Falha ao carregar Tailwind CSS'); document.getElementById('root').innerHTML = '<div class=\'error-message\' style=\'color: red; text-align: center; margin: 20px; font-size: 18px;\'>Erro ao carregar Tailwind CSS. Verifique a conexão.</div>';">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- React e ReactDOM via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js" onerror="console.error('Falha ao carregar React'); document.getElementById('root').innerHTML = '<div class=\"error-message\" style=\"color: red; text-align: center; margin: 20px; font-size: 18px;\">Erro ao carregar React. Verifique a conexão.</div>'"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js" onerror="console.error('Falha ao carregar ReactDOM'); document.getElementById('root').innerHTML = '<div class=\"error-message\" style=\"color: red; text-align: center; margin: 20px; font-size: 18px;\">Erro ao carregar ReactDOM. Verifique a conexão.</div>'"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.22.9/babel.min.js" onerror="console.error('Falha ao carregar Babel'); document.getElementById('root').innerHTML = '<div class=\"error-message\" style=\"color: red; text-align: center; margin: 20px; font-size: 18px;\">Erro ao carregar Babel. Verifique a conexão.</div>'"></script>
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            margin: 0;
+            padding: 0;
+            background: #F9FAFB;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin: 20px;
+            font-size: 18px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+        .header {
+            background: linear-gradient(to right, #3B82F6, #1E40AF);
+            color: white;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .header nav ul {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            padding: 0;
+        }
+        .header nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .header nav a:hover {
+            color: #F97316;
+        }
+        .section {
+            padding: 96px 0;
+            text-align: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .section h2 {
+            font-size: 40px;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 24px;
+        }
+        .section p {
+            font-size: 18px;
+            color: #4B5563;
+            max-width: 800px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+        }
+        .card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #E5E7EB;
+        }
+        .card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+        .card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #3B82F6;
+            margin-bottom: 12px;
+        }
+        .card p {
+            font-size: 16px;
+            color: #4B5563;
+            line-height: 1.5;
+        }
+        .button {
+            background: #3B82F6;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 9999px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .button:hover {
+            background: #1E40AF;
+            transform: scale(1.05);
+        }
+        .button.green {
+            background: #10B981;
+        }
+        .button.green:hover {
+            background: #059669;
+        }
+        .button.red {
+            background: #EF4444;
+        }
+        .button.red:hover {
+            background: #DC2626;
+        }
+        .button.orange {
+            background: #F97316;
+        }
+        .button.orange:hover {
+            background: #EA580C;
+        }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+        .modal-content button.close {
+            color: #EF4444;
+            float: right;
+            font-weight: bold;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .modal-content form input,
+        .modal-content form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 16px;
+            border:  recap1px solid #D1D5DB;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #25D366;
+            color: white;
+            padding: 16px;
+            border-radius: 50%;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        .footer {
+            background: linear-gradient(to right, #3B82F6, #1E40AF);
+            color: white;
+            padding: 48px 0;
+            text-align: center;
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 16px;
+            font-weight: 600;
+        }
+        .footer a:hover {
+            color: #F97316;
+        }
+        @media (max-width: 768px) {
+            .section h2 {
+                font-size: 32px;
+            }
+            .header nav ul {
+                gap: 16px;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .card img {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>
